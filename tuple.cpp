@@ -70,11 +70,11 @@ class tuple<T>{
         return arr[n-1];
     }
     void update(T val, int comp){
-        if(comp >= size){
+        if(comp-1 >= size){
             cout << "Error: No valid index." << endl;
             return;
         }
-        arr[comp] = val;
+        arr[comp-1] = val;
         return;
     }
 };

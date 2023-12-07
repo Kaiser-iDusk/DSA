@@ -159,25 +159,38 @@ class Graph{
 
         SMinHeap spq(size, 2);
         spq.push(t);
+        
+        // cout << "Min Heap after push: " << endl;
+        // spq.display();
 
         while(!spq.isEmpty()){
             tuple<int> fnt = spq.front();
             spq.pop_front();
             int currV = fnt.element(1);
             
+            // cout << "Front element: " << endl;
+            // fnt.disptup();
+
             W[currV] = fnt.element(2);
             P[currV] = fnt.element(3);
+            visited[currV] = true;
             
             mstWt += W[currV];
+
+            // cout << "---Curr Index = " << currV << "---" << endl;
 
             for(int i = 0; i< size; i++){
                 if(matrix[currV][i]!=0 && !visited[i]){
                     int f = spq.find(i, 1);
                     if(f!=-1){
+                        // cout << "Index " << i << " exists in Min Heap at " << f << endl;
                         if(spq.elem(f).element(2) > matrix[currV][i]){
+                            // cout << "Updating weight from " << spq.elem(f).element(2) << " to weight "<< matrix[currV][i] << endl;
                             spq.change(f, matrix[currV][i], 2);
                         }
                         spq.change(f, currV, 3);
+                        // cout << "After changes in " << i << " the PQ: " << endl;
+                        // spq.display();
                     }
                     else{
                         tuple<int> tup(3);
@@ -185,6 +198,9 @@ class Graph{
                         tup.insert(matrix[currV][i]);
                         tup.insert(currV);
                         spq.push(tup);
+                        
+                        // cout << "The PQ after pushing new tuple : " << endl;
+                        // spq.display();
                     }
                 }
             }
@@ -200,7 +216,7 @@ class Graph{
 
     void dispPrim(int n, int* P, int* W){
         for(int i = 0; i< size; i++){
-            cout << "Vertex: " << i << " || Parent: " << P[i] << " || Weight: " << W[i];
+            cout << "Vertex: " << i << " || Parent: " << P[i] << " || Weight: " << W[i] << endl;
         }
         return;
     }
@@ -231,14 +247,15 @@ int main(){
     cout << "Minimum weight of MST is: "<< min_wt << endl;
 
     // Prims' Algo
-    int* P = NULL;
-    int* W = NULL;
+    int* P = new int[n];
+    int* W = new int[n];
     int source = 0;
     cout << "Enter source vertex: ";
     cin >> source;
     cout << endl;
 
-    cout << "Prim's MST weight: " << endl << gph->PrimMST(source, P, W) << endl;
+    cout << "Prim's MST weight: " << endl;
+    cout << gph->PrimMST(source, P, W) << endl;
     cout << "------------------" << endl;
     cout << "Prims's MST: " << endl;
     gph->dispPrim(n, P, W);
