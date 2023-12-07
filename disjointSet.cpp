@@ -38,6 +38,7 @@ class disjointSet{
         // cout << "Parent of " << x << " is : " << fx << endl;
         // cout << "Parent of " << y << " is : " << fy << endl;
         if(parent[fx] < parent[fy]){
+            parent[fx] += parent[fy];
             parent[fy] = fx;
             parent[y] = fx;
             return;
@@ -45,6 +46,7 @@ class disjointSet{
         else{
             parent[fy] += parent[fx];
             parent[fx] = fy;
+            parent[x] = fy;
             return;
         }
         return;
