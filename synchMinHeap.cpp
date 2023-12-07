@@ -144,20 +144,25 @@ public:
     }
 
     void change(int index, int newVal, int comp){
+        // cout << "Index = " << index << " | comp = " << comp << " | compInd " << compInd << endl;
         if(index >= pos){
             return;
         }
         if(v[index].element(comp) == newVal){
+            // cout << "Comp and compInd vals are same." << endl;
             return;
         }
         if(comp == compInd){
+            // cout << "Comp and compInd are same." << endl;
             int val = v[index].element(comp);
+            // cout << "tuple at postion " << index << endl;
+            v[index].disptup();
             v[index].update(newVal, comp);
             if(val > newVal){
-                HeapifyDown(index);
+                HeapifyUp(index);
                 return;
             }
-            HeapifyUp(index);
+            HeapifyDown(index);
             return;    
         }  
         else{
